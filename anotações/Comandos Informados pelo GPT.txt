@@ -1,0 +1,36 @@
+Comando para rodar uma Migration
+
+npm run typeorm migration:generate -- -d data-source.ts src/database/migrations/CreateUserTable
+
+Criar uma migration vazia manualmente
+
+npm run typeorm migration:create -- -d data-source.ts src/database/migrations/CreateUserTable
+
+Depois, edite o conteúdo da migration gerada para incluir qualquer SQL que queira rodar.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+EXEMPLO PRÁTICO
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+✅ Passo 1 – Alterar a entidade
+
+Adicionei um novo atributo na entity usuario:
+
+@Column({ nullable: true })
+phone: string;
+
+✅ Passo 2 – Gerar uma migration com o TypeORM
+
+npm run typeorm migration:generate -- -d data-source.ts src/database/migrations/AddPhoneToUser
+
+✅ Passo 3 – Revisar (opcional) - Exemplo abaixo de como ficaria o comando na migration:
+
+await queryRunner.query(`ALTER TABLE "user" ADD "phone" character varying`);
+
+✅ Passo 4 – Aplicar a migration (manualmente)
+
+npm run typeorm migration:run -- -d data-source.ts
+
+✅ Passo 5 – Testar
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
